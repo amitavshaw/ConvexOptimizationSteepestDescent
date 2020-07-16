@@ -1,0 +1,52 @@
+x = [0 0]'; % initial points
+delta_q = [-1 0]'; %gradient of q
+delta_g2 = [10/8 1]'; %gradient of g2
+delta_time = 0.5; %time stamp
+figure(1)
+axis_x = [0 0];
+axis_y = [0 0];
+% iterations to achieve the optimal value of x
+for i = 1:5000
+    if g1(x(1),x(2))> 0 || g2(x(1),x(2))> 0
+        if g1(x(1),x(2))> 0 && g2(x(1),x(2))<= 0
+            [y1, y2] = delta_g1(x(1),x(2));
+            f = [y1 y2]';
+        elseif g1(x(1),x(2))<= 0 && g2(x(1),x(2))> 0
+            f = delta_g2;
+        elseif g1(x(1),x(2))> 0 && g2(x(1),x(2))> 0
+            [y1, y2] = delta_g1(x(1),x(2));
+            f = [y1 y2]' + delta_g2;
+        end
+    else
+        f = delta_q;
+    end
+    x = x - f*delta_time;
+    axis_x(i) = x(1);
+    axis_y(i) = x(2);
+end
+xlim([0 50]);
+plot(axis_x,axis_y)
+xlabel('x1'); ylabel('x2');
+hold on
+
+f = @(x1,x2) (((x1-10)^2)/36+((x2-10)^2)/81)-1;
+fimplicit(f, [0, 25, 0, 25])
+f1 = @(y1,y2) (10/8)*y1 + y2 - 28;
+fimplicit(f1, [0, 25, 0, 25])
+
+figure (2)
+t = 1:0.25:500;
+disp(t)
+plot(t(1:1:1000), axis_x(1:1000));
+hold on
+plot(t(1:1:1000), axis_y(1:1000));
+function g1_result = g1(x1, x2)
+    g1_result = (((x1-10)^2)/36+((x2-10)^2)/81) -1 ;
+end
+function g2_result = g2(x1, x2)
+    g2_result = (10/8)*x1 + x2 - 28;
+end
+function [y1, y2] = delta_g1(x1, x2)
+    y1 = (x1-10)/18;
+    y2 = 2*(x2-10)/81;
+end
