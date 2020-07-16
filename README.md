@@ -9,5 +9,5 @@ This book is by Prof. Stephen Boyd who is a pioneer in this field: https://web.s
 Best part, this book is for free. There are recorded lectures on the subject as well, as a course offered at Stanford University.
 https://www.youtube.com/watch?v=uF3htLwUHn0
 
-Part I and Part II lecture playlist:
+Part I and Part II of the course lecture playlist in Youtube:
 https://www.youtube.com/view_play_list?p=3940DD956CDF0622
